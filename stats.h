@@ -84,7 +84,7 @@ unsigned char find_mean(unsigned char *dataset, unsigned int length);
  * @return mean in form of unsigned char
  */
 
-unsigned char sort_array(unsigned char *dataset, unsigned int length);
+void sort_array(unsigned char *dataset, unsigned int length);
 /**
  * @brief Sorts values in an array from largest to smallest
  *
@@ -95,7 +95,6 @@ unsigned char sort_array(unsigned char *dataset, unsigned int length);
  * @param dataset         pointer to array of unsigned chars to be sorted
  * @param length          size of dataset as unsigned int
  *
- * @return sorted data as array of unsigned char
  */
 
 void print_statistics(unsigned char minimum, unsigned char maximum, unsigned char median, unsigned char mean);

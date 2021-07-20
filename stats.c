@@ -47,27 +47,128 @@ void main() {
   /* Other Variable Declarations Go Here */
   /* Statistics and Printing Functions Go Here */
 
+  /* It might be simple (and efficient) to call sort_array before calculating
+  *  stats, but that would make functions less generally applicable as they 
+  *  would rely on pre-sorted data.
+  */
+
+  // calculate statistics
+  unsigned char minimum = find_minimum(test,SIZE);
+  unsigned char maximum = find_maximum(test,SIZE);
+  unsigned char median = find_median(test,SIZE);
+  unsigned char mean = find_mean(test,SIZE);
+
+  // print statistics to display
+  print_statistics(minimum, maximum, median, mean);
+
+  // sort array
+  sort_array(test,SIZE);
+
+  // print sorted array results
+  print_array(test, SIZE);
 }
 
 /* Add other Implementation File Code Here */
 
+
 unsigned char find_minimum(unsigned char *dataset, unsigned int length) {
+  // initialise minimum to first value of data
+  unsigned char minimum = *dataset;
+  /* compare minimum with each other value in data in turn, update if lower
+  *  value is found
+  */
+  for (int n = 1; n < length; n++) {
+    if (minimum > *(dataset + n)) {
+      minimum = *(dataset + n);
+    }
+  }
+  
+  return minimum;
 }
+
 
 unsigned char find_maximum(unsigned char *dataset, unsigned int length) {
+  // initialise maximum to first value of data
+  unsigned char maximum = *dataset;
+  /* compare maximum with each other value in data in turn, update if higher
+  *  value is found
+  */
+  for (int n = 1; n < length; n++) {
+    if (maximum < *(dataset + n)) {
+      maximum = *(dataset + n);
+    }
+  }
+  
+  return maximum;
 }
+
 
 unsigned char find_median(unsigned char *dataset, unsigned int length) {
+  // copying array of data so original is undisturbed
+  unsigned char medianArray[length], median;
+  for (int n = 0; n < length; n++) {
+    *(medianArray + n) = *(dataset + n);
+  }
+  // call sort_array on copied array
+  sort_array(medianArray,length);
+  // for odd number of elements (n) median is element (n-1)/2
+  if (length % 2 == 0) {
+    median = medianArray[(length - 1)/2];
+  }
+  else {
+    // otherwise, take mean of elements (n/2) and (n/2 - 1)
+    median = (medianArray[length/2] + medianArray[length/2 - 1])/2; 
+  }
+  return median;
 }
+
 
 unsigned char find_mean(unsigned char *dataset, unsigned int length) {
+  unsigned int sum = 0;
+  unsigned char mean;
+  // sum all values and divide by length
+  for (int n = 0; n < length; n++) {
+    sum += n;
+  }
+  mean = sum/length;
+
+  return mean;
 }
 
-unsigned char sort_array(unsigned char *dataset, unsigned int length) {
+
+void sort_array(unsigned char *dataset, unsigned int length) {
+  unsigned char n, m, swap;
+  // bubble sorting used for simplicity
+  for (n = 0; n < length -1; n++) {
+    for (m = n; m < length; m++) {
+      if (*(dataset + n) < *(dataset + m)) {
+        swap = *(dataset + n);
+        *(dataset + n) = *(dataset + m);
+        *(dataset + m) = swap;
+      }
+    }
+  }
 }
+
 
 void print_statistics(unsigned char minimum, unsigned char maximum, unsigned char median, unsigned char mean) {
+  printf("The statistics for the data set provided are as follows:\n\n");
+  printf("\tMinimum value:\t\t%d\n", minimum);
+  printf("\tMaximum value:\t\t%d\n", maximum);
+  printf("\tMedian value:\t\t%d\n", median);
+  printf("\tMean value:\t\t%d\n", mean);
+  printf("\n");
 }
 
+
 void print_array(unsigned char *dataset, unsigned int length) {
+  printf("The contents of the array are: \n\n");
+  for (unsigned int n = 0; n < length; n++) {
+    int ans = *(dataset + n);
+    printf("%d \t", ans);
+    if ((n + 1) % 8 == 0) {
+      printf("\n");
+    }
+  }
+  printf("\n");
 }
