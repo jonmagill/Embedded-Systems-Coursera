@@ -51,23 +51,23 @@ void main() {
 
 /* Add other Implementation File Code Here */
 
-unsigned char find_minimum(unsigned char dataset[], unsigned int length) {
+unsigned char find_minimum(unsigned char *dataset, unsigned int length) {
 }
 
-unsigned char find_maximum(unsigned char dataset[], unsigned int length) {
+unsigned char find_maximum(unsigned char *dataset, unsigned int length) {
 }
 
-unsigned char find_median(unsigned char dataset[], unsigned int length) {
+unsigned char find_median(unsigned char *dataset, unsigned int length) {
 }
 
-unsigned char find_mean(unsigned char dataset[], unsigned int length) {
+unsigned char find_mean(unsigned char *dataset, unsigned int length) {
 }
 
-unsigned char sort_array(unsigned char dataset[], unsigned int length) {
+unsigned char sort_array(unsigned char *dataset, unsigned int length) {
 }
 
 void print_statistics(unsigned char minimum, unsigned char maximum, unsigned char median, unsigned char mean) {
 }
 
-void print_array(unsigned char dataset[], unsigned int length) {
+void print_array(unsigned char *dataset, unsigned int length) {
 }
