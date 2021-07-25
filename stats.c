@@ -112,7 +112,7 @@ unsigned char find_median(unsigned char *dataset, unsigned int length) {
   // call sort_array on copied array
   sort_array(medianArray,length);
   // for odd number of elements (n) median is element (n-1)/2
-  if (length % 2 == 0) {
+  if (length % 2 == 1) {
     median = medianArray[(length - 1)/2];
   }
   else {
@@ -128,7 +128,7 @@ unsigned char find_mean(unsigned char *dataset, unsigned int length) {
   unsigned char mean;
   // sum all values and divide by length
   for (int n = 0; n < length; n++) {
-    sum += n;
+    sum += *(dataset + n);
   }
   mean = sum/length;
 
