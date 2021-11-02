@@ -1,54 +1,34 @@
 /******************************************************************************
- * Copyright (C) 2017 by Alex Fosdick - University of Colorado
+ * Copyright (C) 2021 by Jonathan Magill
  *
- * Redistribution, modification or use of this software in source or binary
+ * Use or modification of this software in source or binary
  * forms is permitted as long as the files maintain this copyright. Users are 
- * permitted to modify this and use it to learn about the field of embedded
- * software. Alex Fosdick and the University of Colorado are not liable for any
+ * permitted to use this file as required. Jonathan Magill not liable for any
  * misuse of this material. 
  *
  *****************************************************************************/
 /**
  * @file main.c
- * @brief Main entry point to the C1M2 Assessment
+ * @brief Main entry point to the Course 1 final assessment
  *
- * This file contains the main code for the C1M2 assesment. Students
- * are not to change any of the code, they are instead supposed to compile
- * these files with their makefile.
+ * This file contains the main code for the Course 1 final assessment.
  *
- * @author Alex Fosdick
- * @date April 1 2017
+ * @author Jonathan Magill
+ * @date October 28th 2021
  *
  */
-#include "platform.h"
-#include "memory.h"
 
-#define MAX_LENGTH (10)
-char buffer[MAX_LENGTH];
+#include <stdio.h>
+#include <stdlib.h>
 
-/* A pretty boring main file */
+
+/* Main function for this assigment - calls course1() */
 int main(void) {
-  unsigned int i;
-  char value;
 
-  /* Code below does some arbitrary memory Reads & writes */
-  clear_all(buffer, MAX_LENGTH);
-  set_all( ( buffer + 8 ), 43, 2); 
-  set_value(buffer, 0, 0x61);
-  value = get_value(buffer, 9);
-  set_value(buffer, 9, (value + 0x27));
-  set_value(buffer, 3, 0x37);
-  set_value(buffer, 1, 88);
-  set_value(buffer, 4, '2');
-  value = get_value(buffer, 1);
-  set_value(buffer, 2, 121);
-  set_value(buffer, 7, (value - 12));
-  set_value(buffer, 5, 0x5F);
-
-  for ( i = 0; i < MAX_LENGTH; i++ ){
-    PRINTF("%c", buffer[i]);
-  }
-  PRINTF("\n");
+  #ifdef COURSE1
+  course1();
+  #endif
+  
   return 0;
 }
 

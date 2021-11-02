@@ -32,11 +32,12 @@
 
 #include <stdio.h>
 #include "stats.h"
+#include "platform.h"
 
 /* Size of the Data Set */
 #define SIZE (40)
 
-void main() {
+/*void main() {
 
   unsigned char test[SIZE] = { 34, 201, 190, 154,   8, 194,   2,   6,
                               114, 88,   45,  76, 123,  87,  25,  23,
@@ -44,13 +45,6 @@ void main() {
                               201,   6,  12,  60,   8,   2,   5,  67,
                                 7,  87, 250, 230,  99,   3, 100,  90};
 
-  /* Other Variable Declarations Go Here */
-  /* Statistics and Printing Functions Go Here */
-
-  /* It might be simple (and efficient) to call sort_array before calculating
-  *  stats, but that would make functions less generally applicable as they 
-  *  would rely on pre-sorted data.
-  */
 
   // calculate statistics
   unsigned char minimum = find_minimum(test,SIZE);
@@ -66,7 +60,7 @@ void main() {
 
   // print sorted array results
   print_array(test, SIZE);
-}
+}*/
 
 /* Add other Implementation File Code Here */
 
@@ -152,23 +146,25 @@ void sort_array(unsigned char *dataset, unsigned int length) {
 
 
 void print_statistics(unsigned char minimum, unsigned char maximum, unsigned char median, unsigned char mean) {
-  printf("The statistics for the data set provided are as follows:\n\n");
-  printf("\tMinimum value:\t\t%d\n", minimum);
-  printf("\tMaximum value:\t\t%d\n", maximum);
-  printf("\tMedian value:\t\t%d\n", median);
-  printf("\tMean value:\t\t%d\n", mean);
-  printf("\n");
+  PRINTF("The statistics for the data set provided are as follows:\n\n");
+  PRINTF("\tMinimum value:\t\t%d\n", minimum);
+  PRINTF("\tMaximum value:\t\t%d\n", maximum);
+  PRINTF("\tMedian value:\t\t%d\n", median);
+  PRINTF("\tMean value:\t\t%d\n", mean);
+  PRINTF("\n");
 }
 
 
 void print_array(unsigned char *dataset, unsigned int length) {
-  printf("The contents of the array are: \n\n");
+  #ifdef VERBOSE
+  PRINTF("The contents of the array are: \n\n");
   for (unsigned int n = 0; n < length; n++) {
     int ans = *(dataset + n);
-    printf("%d \t", ans);
+    PRINTF("%d \t", ans);
     if ((n + 1) % 8 == 0) {
-      printf("\n");
+      PRINTF("\n");
     }
   }
-  printf("\n");
+  PRINTF("\n");
+  #endif
 }

@@ -14,18 +14,24 @@
 ifeq ($(PLATFORM),MSP432)
 	SOURCES = main.c \
 	memory.c \
+	data.c \
+	stats.c \
+	course1.c \
 	interrupts_msp432p401r_gcc.c \
 	startup_msp432p401r_gcc.c \
 	system_msp432p401r.c
 else
 
 SOURCES = main.c \
-          memory.c
+          memory.c \
+	  data.c \
+	  stats.c \
+	  course1.c
 endif
 
 # Add your include paths to this variable
-INCLUDES = -I../src \
-    -I../include/common \
-    -I../include/CMSIS \
-    -I../include/msp432
+INCLUDES = -I./src \
+    -I./include/common \
+    -I./include/CMSIS \
+    -I./include/msp432
 

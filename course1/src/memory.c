@@ -20,6 +20,8 @@
  * @date April 1 2017
  *
  */
+#include <stdio.h>
+#include <stdlib.h>
 #include "memory.h"
 
 /***********************************************************
@@ -48,3 +50,101 @@ void clear_all(char * ptr, unsigned int size){
   set_all(ptr, 0, size);
 }
 
+uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length){
+  // create copy of src to allow overlaps
+  uint8_t copySrc[length];
+  uint8_t *copySrcPtr = copySrc;
+  
+  for (int i = 0; i < length; i++) {
+    *copySrc = *src;
+    copySrcPtr ++;
+    src++;
+  }
+  
+  // reset pointer to start of copy
+  copySrcPtr = copySrc;
+
+  // copy into destination
+  for (int i = 0; i < length; i++) {
+    *dst = *copySrc;
+    copySrcPtr++;
+    dst++;
+  }
+
+  // return pointer to start of dst
+  return dst - length;
+}
+
+uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length){
+  
+  for (int i = 0; i < length; i++) {
+    *dst = *src;
+    dst++;
+    src++;
+  }
+  
+  // return pointer to start of dst
+  return dst - length;
+}
+
+uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value){
+  for (int i = 0; i < length; i++) {
+    *src = value;
+    src++;
+  }
+
+  // return pointer to src
+  return src - length;
+}
+
+uint8_t * my_memzero(uint8_t * src, size_t length){
+  for (int i = 0; i < length; i++) {
+    *src = 0;
+    src++;
+  }
+
+  // return pointer to src
+  return src - length;
+}
+
+uint8_t * my_reverse(uint8_t * src, size_t length){
+  // create copy of src
+  uint8_t copySrc[length];
+  uint8_t *copySrcPtr = copySrc;
+  
+  for (int i = 0; i < length; i++) {
+    *copySrc = *src;
+    copySrcPtr++;
+    src++;
+  }
+
+  src = src - length;
+
+  // copy from end of copy to src
+  for (int i = 0; i < length; i++) {
+    *src = *copySrc;
+    copySrcPtr--;
+    src++;
+  }
+
+  // return pointer to start of dst
+  return src - length;
+}
+
+int32_t * reserve_words(size_t length){
+  int32_t * resWordsPtr;
+
+  // allocate memory
+  resWordsPtr = (int32_t *) malloc((sizeof(size_t) * length));
+
+  // if malloc returns 0, return null pointer
+  if (resWordsPtr == 0) {
+    return NULL;
+  }
+  return resWordsPtr;
+}
+
+void free_words(uint32_t * src){
+  // free memory
+  free(src);
+}

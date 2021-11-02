@@ -19,6 +19,9 @@
  * @date April 1 2017
  *
  */
+#include <stdio.h>
+#include <stdlib.h>
+
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
@@ -89,5 +92,100 @@ void set_all(char * ptr, char value, unsigned int size);
  * @return void.
  */
 void clear_all(char * ptr, unsigned int size);
+
+/**
+ * @brief Moves values in memory from one location to another
+ *
+ * Given a pointer to a uint8_t source location, destination location,
+ * and length, copies contents of source to destination. Source and 
+ * destination regions may overlap without a loss of data.
+ *
+ * @param src Pointer to source data array
+ * @param dst Pointer to destination data array
+ * @param length Number of bytes to move
+ *
+ * @return uint8_t pointer to destination location
+ */
+uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length);
+
+/**
+ * @brief Copies values in memory from one location to another
+ *
+ * Given a pointer to a uint8_t source location, destination location,
+ * and length, moves contents of source to destination. Source is not 
+ * protected so, if regions overlap, source data may be overwritten.
+ *
+ * @param src Pointer to source data array
+ * @param dst Pointer to destination data array
+ * @param length Number of bytes to copy
+ *
+ * @return uint8_t pointer to destination location
+ */
+uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length);
+
+/**
+ * @brief Sets all bytes in the designated area to a particular value
+ *
+ * Given a pointer to source location, a length in bytes, and a value,
+ * sets all elements within the target region to the given value. 
+ *
+ * @param src Pointer to start of region to be set
+ * @param length Number of bytes to set to value
+ * @param value Value for bytes to be set to
+ *
+ * @return uint8_t pointer to start address
+ */
+uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value);
+
+/**
+ * @brief Clears elements in a region of memory
+ *
+ * Given a pointer to source location, and a length in bytes,
+ * sets all elements within the target region to zero. 
+ *
+ * @param src Pointer to start of region to be set
+ * @param length Number of bytes to set to value
+ *
+ * @return uint8_t pointer to start address
+ */
+uint8_t * my_memzero(uint8_t * src, size_t length);
+
+/**
+ * @brief Reverses the order of bytes in a given region of memory
+ *
+ * Given a pointer to source location, and a length in bytes,
+ * reverses the order of the bytes in the region.
+ *
+ * @param src Pointer to start of region to be set
+ * @param length Number of bytes to set to value
+ *
+ * @return uint8_t pointer to start address
+ */
+uint8_t * my_reverse(uint8_t * src, size_t length);
+
+/**
+ * @brief Reserves a number of words of memory
+ *
+ * Allocates a given number of words of space in dynamic memory.
+ * If this is not possible, returns NULL, otherwise returns memory
+ * address.
+ *
+ * @param length Number of words of memory to allocate
+ *
+ * @return int32_t pointer to memory address or NULL
+ */
+int32_t * reserve_words(size_t length);
+
+/**
+ * @brief Frees words in dynamic memory
+ *
+ * Given a pointer to an address in dynamic memory, frees that word.
+ *
+ * @param src Pointer to start of region to be freed
+ *
+ * @return void.
+ */
+void free_words(uint32_t * src);
+
 
 #endif /* __MEMORY_H__ */

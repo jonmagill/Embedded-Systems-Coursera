@@ -30,6 +30,8 @@
 #------------------------------------------------------------------------------
 include sources.mk
 
+VPATH = src INCLUDE
+
 ifeq ($(PLATFORM),HOST)
     # Architecture Specific Flags
     ARCH:=$(shell arch)
@@ -40,7 +42,7 @@ ifeq ($(PLATFORM),HOST)
     LD = ld
     ARCH_CFLAGS = -DHOST
 
-    CPPFLAGs = -DHOST $(INCLUDES)
+    CPPFLAGs = -DHOST $(INCLUDES) -DVERBOSE -DCOURSE1
 
     OBJDUMP = objdump
 
@@ -48,7 +50,7 @@ ifeq ($(PLATFORM),HOST)
 
 else
     # Architecture Specific Flags
-    LINKER_FILE = ../msp432p401r.lds
+    LINKER_FILE = msp432p401r.lds
     ARCH = armv7e-m
     CPU = cortex-m4
     SPECS = nosys.specs
@@ -77,7 +79,7 @@ else
 endif
 
 # Compiler Flags and Defines
-TARGET = c1m2
+TARGET = main
 CFLAGS = $(ARCH_CFLAGS) \
      $(INCLUDES) \
      -Wall \
