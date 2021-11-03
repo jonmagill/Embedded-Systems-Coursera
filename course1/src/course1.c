@@ -38,7 +38,7 @@ int8_t test_data1() {
     return TEST_ERROR;
   }
 
-  digits = my_itoa( num, ptr, BASE_16);   
+  digits = my_itoa( num, ptr, BASE_16);
   value = my_atoi( ptr, digits, BASE_16);
   #ifdef VERBOSE
   PRINTF("  Initial number: %d\n", num);
@@ -335,6 +335,9 @@ void course1(void)
   results[5] = test_memcopy();
   results[6] = test_memset();
   results[7] = test_reverse();
+
+  PRINTF("results = \n");
+  PRINTF("%d \n%d \n%d \n%d \n%d \n%d \n%d \n%d \n", results[0],results[1],results[2],results[3],results[4],results[5],results[6],results[7]);
 
   for ( i = 0; i < TESTCOUNT; i++) 
   {

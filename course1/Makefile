@@ -42,7 +42,7 @@ ifeq ($(PLATFORM),HOST)
     LD = ld
     ARCH_CFLAGS = -DHOST
 
-    CPPFLAGs = -DHOST $(INCLUDES) -DVERBOSE -DCOURSE1
+    CPPFLAGs = -DHOST $(INCLUDES) -D$(VERBOSE) -D$(COURSE1)
 
     OBJDUMP = objdump
 
@@ -78,12 +78,17 @@ else
 
 endif
 
+ifeq ($(VERBOSE),TRUE)
+	VER = TRUE
+else
+	VER = FALSE
+endif
+
 # Compiler Flags and Defines
 TARGET = main
 CFLAGS = $(ARCH_CFLAGS) \
      $(INCLUDES) \
      -Wall \
-     -Werror \
      -g \
      -O0 \
      -std=c99
@@ -98,7 +103,7 @@ I = $(SOURCES:.c=.i)
 	$(CC) -c -E -MMD $< $(CFLAGS) $(CPPFLAGS) -o $@
 
 %.o : %.c
-	$(CC) -c $< $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@
+	$(CC) -c $< $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -DVERBOSE=VER -o $@
 
 %.i : %.c
 	$(CC) -c -E $< $(CFLAGS) $(CPPFLAGS) -o $@

@@ -22,6 +22,8 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
+#include <stdint.h>
 #include "memory.h"
 
 /***********************************************************
@@ -56,7 +58,7 @@ uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length){
   uint8_t *copySrcPtr = copySrc;
   
   for (int i = 0; i < length; i++) {
-    *copySrc = *src;
+    *copySrcPtr = *src;
     copySrcPtr ++;
     src++;
   }
@@ -66,7 +68,7 @@ uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length){
 
   // copy into destination
   for (int i = 0; i < length; i++) {
-    *dst = *copySrc;
+    *dst = *copySrcPtr;
     copySrcPtr++;
     dst++;
   }
@@ -108,34 +110,34 @@ uint8_t * my_memzero(uint8_t * src, size_t length){
 }
 
 uint8_t * my_reverse(uint8_t * src, size_t length){
-  // create copy of src
-  uint8_t copySrc[length];
-  uint8_t *copySrcPtr = copySrc;
+  // create pointers to start and end of src
+  uint8_t *ptrStart = src;    
+  uint8_t *ptrEnd = src + (length-1); 
   
-  for (int i = 0; i < length; i++) {
-    *copySrc = *src;
-    copySrcPtr++;
-    src++;
+  // create swap variable to hold value
+  uint8_t swap = 0;
+  
+  while((ptrEnd - ptrStart) > 1) {
+    swap = *ptrStart;
+    *ptrStart = *ptrEnd;
+    *ptrEnd = swap;
+    ptrStart++;
+    ptrEnd--; 
+  
+    if(ptrStart == (ptrEnd -1)) {
+      swap = *ptrStart;
+      *ptrStart = *ptrEnd;
+      *ptrEnd = swap;
+    }
   }
-
-  src = src - length;
-
-  // copy from end of copy to src
-  for (int i = 0; i < length; i++) {
-    *src = *copySrc;
-    copySrcPtr--;
-    src++;
-  }
-
-  // return pointer to start of dst
-  return src - length;
+  return src;
 }
 
 int32_t * reserve_words(size_t length){
   int32_t * resWordsPtr;
 
   // allocate memory
-  resWordsPtr = (int32_t *) malloc((sizeof(size_t) * length));
+  resWordsPtr = (int32_t *) malloc(sizeof(size_t) * length);
 
   // if malloc returns 0, return null pointer
   if (resWordsPtr == 0) {

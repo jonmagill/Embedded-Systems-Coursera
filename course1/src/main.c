@@ -20,14 +20,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "course1.h"
 
 
 /* Main function for this assigment - calls course1() */
 int main(void) {
 
-  #ifdef COURSE1
+  //#ifdef COURSE1
   course1();
-  #endif
+  //#endif
   
   return 0;
 }

@@ -21,24 +21,28 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
+#include <stdint.h>
 #include "data.h"
 #include "memory.h"
 
+
+
 // assuming negative numbers provided in 2's complement
 uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base){
-  int modulo, digits;
+  int modulo;
+  int digits = 0;
   int neg = 0;
   
   // check sign of 
-  if (data/0x80000000 == 1) {
+  if (data < 0) {
     // value is negative
     neg = 1;
-    data = (data -1) ^ 0xFFFFFFFF;
+    data *= -1;
   }
 
   while(data != 0) {
     modulo = data % base;
-    data /= base;
 
     // for bases higher than 10
     if(modulo > 9) {
@@ -49,55 +53,54 @@ uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base){
     }
     ptr++;
     digits++;
+    data = data/base;
   }
+
   if(neg == 1) {
     *ptr = 45;
-    ptr++;
+    ptr ++;
     digits++;
   }
 
+  // reset pointer position
+  ptr = ptr - digits;
+  
   // reverse order of digits
   my_reverse(ptr, digits);
 
   return digits;
-  
-    
 }
 
 // assuming 2's complement for negative numbers
 int32_t my_atoi(uint8_t * ptr, uint8_t digits, uint32_t base){ 
   uint32_t sum = 0;
   int neg = 0;
-  
-  // check for negative number
-  if(*ptr == 45) {
-    neg = 1;
-    ptr++;
-  }
-  
-  ptr = ptr + digits -1;
 
+  ptr = ptr+digits-1;
   int power = 1;
-  if(neg == 1){
-    digits--;
-  }
 
   while(digits != 0) {
-    if (*ptr > 65) {
-        *ptr -= 55;
+    // check for negative number
+    if(*ptr == 45) {
+      neg = 1;
+    }
+
+    else if (*ptr > 65) {
+      *ptr -= 55;
+      sum += *ptr * power;
     }
     else {
-        *ptr -= 48;
+      *ptr -= 48;
+      sum += *ptr * power;
     }
-    ptr++;
-    sum += *ptr * power;
     digits--;
     power *= base;
+    ptr --;
   }
-  
+  ptr ++;
   // apply 2's complement if neg = 1
   if (neg == 1) {
-    sum = (sum ^ (0xFFFFFFFE)) + 1;
+    sum *= -1;
   }
   
   return sum;
